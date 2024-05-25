@@ -1,0 +1,31 @@
+{% extends "bases/base.html" %}
+{% load static %}
+    
+{% block 'head' %}
+
+    <link rel="stylesheet" href="{% static 'fincaneiro/CSS/css.css' %}" >
+
+{% endblock 'head' %}
+
+
+{% block 'conteudo' %}
+
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Produto</th>
+            <th>Quantidade</th>
+            <th>Preço</th>
+        </tr>
+        {% for venda in vendas %}
+            <tr class="linha-tabela">
+                <td>{{venda.id}}</td>
+                <td>{{venda.produto.nome}}</td>
+                <td>{{venda.quantidade}}</td>
+                <td>{{venda.preco}}</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+
+{% endblock %}

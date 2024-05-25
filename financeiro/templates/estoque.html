@@ -1,0 +1,30 @@
+{% extends "bases/base.html" %}
+{% load static %}
+    
+{% block 'head' %}
+
+    <link rel="stylesheet" href="{% static 'fincaneiro/CSS/css.css' %}" >
+
+{% endblock 'head' %}
+
+
+{% block 'conteudo' %}
+
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Quantidade</th>
+        </tr>
+        {% for produto in produtos %}
+            {% if produto.quantidade > 0 %}
+            <tr class="linha-tabela">
+                <td>{{produto.id}}</td>
+                <td>{{produto.nome}}</td>
+                <td>{{produto.quantidade}}</td>
+            </tr>
+            {% endif %}
+        {% endfor %}
+    </table>
+
+{% endblock %}
