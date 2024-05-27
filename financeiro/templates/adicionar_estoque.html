@@ -1,0 +1,42 @@
+{% extends "bases/base.html" %}
+{% load static %}
+    
+{% block 'head' %}
+
+    <link rel="stylesheet" href="{% static 'fincaneiro/CSS/css.css' %}" >
+
+{% endblock 'head' %}
+
+
+{% block 'conteudo' %}
+
+
+    <form action="{% url 'adicionar_vendas' %}" method="POST">{% csrf_token %}
+        <label for="produtos_existentes">Atualizar produto existente</label>
+        <select class="select form-control bg-select" name="produtos_existentes">
+            {% for produto in produtos %}
+                    <option class="opt" value="{{produto.id}}">{{produto.nome}}</option>
+            {% endfor %}
+        </select>
+        <label for="novo_produto">Novo produto</label>
+        <input type="text" name="novo_produto"></input>
+        <label for="quantidade">Quantidade comprada</label>
+        <input type="number" name="quantidade"></input>
+        <label for="valor">Valor Total</label>
+        <input type="number" name="valor"></input>
+    </form>
+
+
+
+    <script>
+        function toggleFields() {
+            var produtoExistente = document.getElementById("produtos_existentes").value;
+            var novoProduto = document.getElementById("novo_produto").value;
+        
+            document.getElementById("produtos_existentes").disabled = novoProduto.length > 0;
+            document.getElementById("novo_produto").disabled = produtoExistente.length > 0;
+        }
+        </script>
+
+
+{% endblock %}

@@ -5,4 +5,6 @@ urlpatterns = [
     path('estoque/', views.estoque, name="estoque"),
     path('vendas/', views.vendas, name="vendas"),
     path('relatorio/', views.relatorio, name="relatorio"),
+    path('adicionar_vendas/', views.adicionar_vendas, name="adicionar_vendas"),
+    path('adicionar_estoque/', views.adicionar_estoque, name="adicionar_estoque"),
 ]

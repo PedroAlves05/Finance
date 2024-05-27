@@ -1,0 +1,30 @@
+{% extends "bases/base.html" %}
+{% load static %}
+    
+{% block 'head' %}
+
+    <link rel="stylesheet" href="{% static 'fincaneiro/CSS/css.css' %}" >
+
+{% endblock 'head' %}
+
+
+{% block 'conteudo' %}
+
+
+    <form action="{% url 'adicionar_vendas' %}" method="POST">{% csrf_token %}
+        <label for="produtos_existentes">Produtos</label>
+        <select class="select form-control bg-select" name="produtos_existentes">
+            {% for produto in produtos %}
+                {% if produto.quantidade > 0 %}
+                    <option class="opt" value="{{produto.id}}">{{produto.nome}}</option>
+                {% endif %} 
+            {% endfor %}
+        </select>
+        <label for="quantidade">Quantidade Vendidade</label>
+        <input type="number" name="quantidade"></input>
+        <label for="valor">Valor Total</label>
+        <input type="number" name="valor"></input>
+    </form>
+
+
+{% endblock %}
