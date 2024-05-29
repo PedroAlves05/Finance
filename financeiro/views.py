@@ -12,7 +12,7 @@ def estoque(request):
         produtos = Produtos.objects.filter(usuario=usuario)
         return render(request, 'estoque.html', {'produtos': produtos})
 
-
+@login_required
 def adicionar_estoque(request):
     if request.method == "GET":
         usuario = request.user

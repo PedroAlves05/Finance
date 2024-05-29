@@ -1,0 +1,22 @@
+{% extends "bases/base.html" %}
+{% load static %}
+    
+{% block 'head' %}
+
+    <link rel="stylesheet" href="{% static 'fincaneiro/CSS/css.css' %}" >
+
+{% endblock 'head' %}
+
+
+{% block 'conteudo' %}
+
+    {% if messages %}
+        <br>
+        {% for message in messages %}
+            <div class="alert {{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+
+    <h1>Estou aqui</h1>
+
+{% endblock %}
