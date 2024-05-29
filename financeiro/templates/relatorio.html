@@ -10,9 +10,16 @@
 
 {% block 'conteudo' %}
 
+    {% if messages %}
+        <br>
+        {% for message in messages %}
+            <div class="alert {{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
 
-    <h1>receita = {{receita}}</h1>
-    <h1>despesa = {{despesa}}</h1>
+
+    <h1>receita = {{total_vendas}}</h1>
+    <h1>despesa = -{{total_compras}}</h1>
     <h1>total = {{total}}</h1>
 
 

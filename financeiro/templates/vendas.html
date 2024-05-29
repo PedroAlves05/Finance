@@ -10,6 +10,13 @@
 
 {% block 'conteudo' %}
 
+    {% if messages %}
+        <br>
+        {% for message in messages %}
+            <div class="alert {{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+
     <table>
         <tr>
             <th>ID</th>

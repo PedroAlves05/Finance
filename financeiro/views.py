@@ -22,8 +22,9 @@ def adicionar_estoque(request):
         usuario = request.user
         if request.POST.get("produtos_existentes"):
             produto_id = request.POST.get("produtos_existentes")
-            produto = Produtos.objects.get(usuario = usuario, id__in = produto_id)
+            produto = Produtos.objects.get(usuario = usuario, id = produto_id)
             quantidade = request.POST.get("quantidade")
+            quantidade = int(quantidade)
             produto.quantidade += quantidade
             produto.save()
         elif request.POST.get("novo_produto"):
@@ -31,7 +32,7 @@ def adicionar_estoque(request):
             quantidade = request.POST.get("quantidade")
             produto = Produtos(
                 usuario = usuario,
-                produto = produto,
+                nome = produto,
                 quantidade = quantidade
             )
             produto.save()
@@ -74,6 +75,7 @@ def adicionar_vendas(request):
             preco = valor
         )
         nova_venda.save()
+        quantidade = int(quantidade)
         produto_escolhido.quantidade -= quantidade
         produto_escolhido.save()
         messages.add_message(request, constants.SUCCESS, 'Nova venda registrada com sucesso!')
@@ -86,5 +88,11 @@ def relatorio(request):
         usuario = request.user
         vendas = Vendas.objects.filter(usuario=usuario)
         compras = Compras.objects.filter(usuario=usuario)
-        total = compras - vendas
-        return render(request, 'relatorio.html', {'vendas' : vendas, 'compras' : compras, 'total':total})
+        total_compras = 0
+        total_vendas = 0
+        for venda in vendas:
+            total_vendas += venda.preco
+        for compra in compras:
+            total_compras += compra.preco
+        total = total_vendas - total_compras
+        return render(request, 'relatorio.html', {'total_vendas' : total_vendas, 'total_compras' : total_compras, 'total':total})

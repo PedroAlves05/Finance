@@ -10,10 +10,17 @@
 
 {% block 'conteudo' %}
 
+    {% if messages %}
+        <br>
+        {% for message in messages %}
+            <div class="alert {{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
 
-    <form action="{% url 'adicionar_vendas' %}" method="POST">{% csrf_token %}
+    <form action="{% url 'adicionar_estoque' %}" method="POST">{% csrf_token %}
         <label for="produtos_existentes">Atualizar produto existente</label>
         <select class="select form-control bg-select" name="produtos_existentes">
+            <option class="opt" value=""></option>
             {% for produto in produtos %}
                     <option class="opt" value="{{produto.id}}">{{produto.nome}}</option>
             {% endfor %}
@@ -24,19 +31,33 @@
         <input type="number" name="quantidade"></input>
         <label for="valor">Valor Total</label>
         <input type="number" name="valor"></input>
+        <button class="btn-secundario">Fechar pedido</button>
     </form>
 
 
 
     <script>
-        function toggleFields() {
-            var produtoExistente = document.getElementById("produtos_existentes").value;
-            var novoProduto = document.getElementById("novo_produto").value;
-        
-            document.getElementById("produtos_existentes").disabled = novoProduto.length > 0;
-            document.getElementById("novo_produto").disabled = produtoExistente.length > 0;
-        }
-        </script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const selectProdutosExistentes = document.getElementById('produtos_existentes');
+            const inputNovoProduto = document.getElementById('novo_produto');
+    
+            selectProdutosExistentes.addEventListener('change', function() {
+                if (selectProdutosExistentes.value) {
+                    inputNovoProduto.disabled = true;
+                } else {
+                    inputNovoProduto.disabled = false;
+                }
+            });
+    
+            inputNovoProduto.addEventListener('input', function() {
+                if (inputNovoProduto.value) {
+                    selectProdutosExistentes.disabled = true;
+                } else {
+                    selectProdutosExistentes.disabled = false;
+                }
+            });
+        });
+    </script>
 
 
 {% endblock %}

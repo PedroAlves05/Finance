@@ -42,8 +42,8 @@ def cadastro(request):
         except:
             return redirect('/usuarios/cadastro')
 
-
-        return redirect('/usuarios/cadastro')
+        messages.add_message(request, constants.SUCCESS, 'Usuario cadastrado com sucesso!')
+        return redirect('/usuarios/login')
     
 
 
@@ -59,7 +59,7 @@ def logar(request):
         if user:
             login(request, user)
             messages.add_message(request, constants.SUCCESS, 'Você fez login com sucesso!')
-            return redirect('/exames/solicitar_exames/')
+            return redirect('/financeiro/estoque/')
         else:
             messages.add_message(request, constants.ERROR, 'Usuario ou senha inválidos')
             return redirect('/usuarios/login')

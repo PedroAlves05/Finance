@@ -10,6 +10,13 @@
 
 {% block 'conteudo' %}
 
+    {% if messages %}
+        <br>
+        {% for message in messages %}
+            <div class="alert {{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+
     <table>
         <tr>
             <th>ID</th>
@@ -26,5 +33,5 @@
             {% endif %}
         {% endfor %}
     </table>
-
+    <a href="{% url "adicionar_estoque" %}" class="btn btn-light">+</a>
 {% endblock %}
