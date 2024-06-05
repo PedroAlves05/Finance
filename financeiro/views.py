@@ -5,14 +5,14 @@ from django.contrib import messages
 from django.contrib.messages import constants
 
 
-@login_required
+
 def estoque(request):
     if request.method == "GET":
         usuario = request.user
         produtos = Produtos.objects.filter(usuario=usuario)
         return render(request, 'estoque.html', {'produtos': produtos})
 
-@login_required
+
 def adicionar_estoque(request):
     if request.method == "GET":
         usuario = request.user
@@ -48,7 +48,7 @@ def adicionar_estoque(request):
         return redirect("/financeiro/estoque/")
 
 
-@login_required
+
 def vendas(request):
     if request.method == "GET":
         usuario = request.user
@@ -56,7 +56,6 @@ def vendas(request):
         return render(request, 'vendas.html', {'vendas' : vendas})
 
 
-@login_required
 def adicionar_vendas(request):
     if request.method == "GET":
         usuario = request.user
@@ -82,7 +81,7 @@ def adicionar_vendas(request):
         return redirect("/financeiro/vendas/")
 
 
-@login_required
+
 def relatorio(request):
     if request.method == "GET":
         usuario = request.user

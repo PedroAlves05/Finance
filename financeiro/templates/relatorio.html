@@ -4,6 +4,7 @@
 {% block 'head' %}
 
     <link rel="stylesheet" href="{% static 'fincaneiro/CSS/css.css' %}" >
+    <link rel="stylesheet" href="{% static 'financeiro/CSS/cabecalho.css' %}">
 
 {% endblock 'head' %}
 
@@ -16,11 +17,44 @@
             <div class="alert {{ message.tags }}">{{ message }}</div>
         {% endfor %}
     {% endif %}
+    <div class="body">
+        <header>
+            <div class="logo">
+                <a href="/"><img class="foto" src="https://img.freepik.com/vetores-premium/vector-de-gradiente-de-logotipo-colorido-de-passaro_1131634-35.jpg"/></a>
+            </div>
+            <div class="meio">
+                <h1>Controle Financeiro</h1>
+                <nav>
+                    <div class="bordaInicio">
+                        <a href="{% url 'estoque'%}"><span>Estoque</span></a>
+                    </div>
+                    <div class="bordaMeio">
+                        <a href="{% url 'vendas' %}"><span>Vendas</span></a>
+                    </div>
+                    <div class="bordaMeio">
+                        <a href="{% url 'relatorio' %}"><span>Financeiro</span></a>
+                    </div>
+                    <div class="bordaFim">
+                        <span>Contatos</span>
+                    </div>
+                </nav>
+            </div>
+            <div class="login">
+                <div>
+                </div>
+                <div>
+                    <img src="https://w7.pngwing.com/pngs/339/876/png-transparent-login-computer-icons-password-login-black-symbol-subscription-business-model.png" alt="Imagem Login" class="imageLogin">
+                </div>
+                <div class="textoLogin">
+                    <p>Faça seu <strong><a href="../../usuarios/login">LOGIN</a></strong> ou crie seu <strong><a href="../../usuarios/cadastro">CADASTRO</a></strong></p>
+                </div>
+            </div>
+        </header>
+    </div>
 
-
-    <h1>receita = {{total_vendas}}</h1>
-    <h1>despesa = -{{total_compras}}</h1>
-    <h1>total = {{total}}</h1>
+        <h1>receita = {{total_vendas}}</h1>
+        <h1>despesa = -{{total_compras}}</h1>
+        <h1>total = {{total}}</h1>
 
 
 {% endblock %}
