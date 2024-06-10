@@ -1,0 +1,83 @@
+.entrada input{
+    width: 100%;
+    background-color: #d9d9d9;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 17px;
+}
+.entrada p{
+    margin-bottom: 0%;
+    margin-top: 6%;
+}
+.entrada{
+ display: grid;
+ grid-template-columns: 15% 70% 15%;
+}
+.entrada button{
+    display: block;
+    margin: 0 auto;
+}
+
+.modal-content{
+    background-color: rgba(237, 248, 249, 0.791) !important;
+    border: 2px solid black !important;
+    border-radius: 45px !important;
+}
+
+.modal-dialog modal-lg modal-dialog-centered
+{
+    background-color: rgba(237, 248, 249, 0.791) !important;
+    border: 2px solid black !important;
+}
+
+.modal-footer{
+    display: grid;
+    grid-template-columns: 15% 70% 15% !important;
+}
+
+.rodabotao{
+    display: grid;
+    grid-template-columns: 15% 35% 35% 15%;
+    margin-bottom: 40px;
+}
+
+.rodabotao button{
+    width: 90%;
+    margin-top: 6%;
+    
+}
+
+.entrada label{
+    margin-bottom: 0%;
+    margin-top: 20px;
+}
+
+
+.caixao{
+    width: 100% !important;
+    background-color: #d9d9d9 !important;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+    padding-top: 14px !important;
+    padding-bottom: 14px !important;
+    border-radius: 17px 17px 0px 0px !important;
+}
+.btn-secundario {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    background-color:#1e5c8a;
+    color: #fafbfc;
+    border-radius: 15px;
+    border: none;
+}
+
+.botao {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    background-color:#909090;
+    color: #fafbfc;
+    border-radius: 15px;
+    border: none;
+}

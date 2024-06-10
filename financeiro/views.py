@@ -53,7 +53,8 @@ def vendas(request):
     if request.method == "GET":
         usuario = request.user
         vendas = Vendas.objects.filter(usuario=usuario)
-        return render(request, 'vendas.html', {'vendas' : vendas})
+        produtos = Produtos.objects.filter(usuario=usuario)
+        return render(request, 'vendas.html', {'vendas' : vendas, 'produtos': produtos})
 
 
 def adicionar_vendas(request):
