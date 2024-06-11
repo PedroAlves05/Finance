@@ -1,10 +1,138 @@
-body{
-    background-color: red;
-    background-image: url('/static/geral/img/bg1.png');
-    background-size: cover;
-
+body, html {
+    height: 100%;
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
 }
 
-p{
-    color: var(--light-color);
+body {
+    display: grid;
+    place-items: center;
+    background-color: #1E5C8A;
+}
+
+#loginDiv, #cadastrarDiv {
+    box-sizing: border-box;
+    width: 680px;
+    background: #EDF8F9;
+    border: 6px solid #000000;
+    border-radius: 76px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 30px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); /* Adicionado para um visual mais moderno */
+}
+
+#cadastrarDiv {
+    height: auto;
+}
+
+h1 {
+    font-weight: 700;
+    font-size: 2.5rem;
+    color: #000000;
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+.form-group, .form-senha {
+    width: calc(100% - 30%);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 30px;
+}
+
+.form-senha {
+    margin-bottom: 0;
+}
+
+p {
+    font-weight: 300;
+    font-size: 1.25rem;
+    color: #000000;
+    margin-bottom: 10px;
+}
+
+input {
+    box-sizing: border-box;
+    width: 100%;
+    height: 77px;
+    background: #D9D9D9;
+    border-radius: 25px;
+    padding: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+    font-size: 28px;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+    border-width: 1px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 40px;
+}
+
+button {
+    width: 200px;
+    height: 50px;
+    background-color: #1E5C8A;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+#entrar:hover {
+    background-color: #17496E;
+    transform: translateY(-3px);
+}
+
+#voltarInicio , img{
+    position: fixed;
+    width: 50px;
+    height: 50px;
+    top: 30px;
+    left: 50px;
+    background-color: #1E5C8A;
+    border-radius: 100%;
+    font-size: 1.5rem;
+    color: black;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+img:hover {
+    background-color: #17496E;
+}
+
+
+.links {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+a, .cadastro{
+    font-size: 1rem;
+    color: #000000;
+    text-align: right;
+    text-decoration: none;
+    align-self: flex-start;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    transition: color 0.3s;
+}
+a{
+    color:#1E5C8A;
+}
+
+a:hover {
+    color: #17496E;
 }

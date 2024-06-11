@@ -10,9 +10,7 @@ def cadastro(request):
     if request.method == "GET":
         return render(request, 'cadastro.html')
     else:
-        primeiro_nome = request.POST.get('primeiro_nome')
-        ultimo_nome = request.POST.get('ultimo_nome')
-        username = request.POST.get('username')
+        username = request.POST.get('email')
         email = request.POST.get('email')
         senha = request.POST.get('senha')
         confirmar_senha = request.POST.get('confirmar_senha')
@@ -28,13 +26,11 @@ def cadastro(request):
         if User.objects.filter(username=username).exists():
             messages.add_message(request, constants.ERROR, 'Esse nome de usuário já existe!')
             return redirect('/usuarios/cadastro')
-
+ 
 
         try:
 
             user = User.objects.create_user(
-                first_name=primeiro_nome,
-                last_name=ultimo_nome,
                 username=username,
                 email=email,
                 password=senha,

@@ -10,31 +10,40 @@
 
 
 {% block 'conteudo' %}
-    <div class="container">
+<button id="voltarInicio" onclick="window.location.href='/'"><img src="{% static 'usuarios/img/voltar.png' %}" alt=""></button>
 
-        <h3 class="font-destaque-secundaria"> <img width="10%" src="{% static 'geral/img/logo.png' %}" alt="">Cadastre-se</h3>
-
-        {% if messages %}
-            <br>
-            {% for message in messages %}
-                <div class="alert {{ message.tags }}">{{ message }}</div>
-            {% endfor %}
-        {% endif %}
+       
 
 
-        <div>
+
+            {% if messages %}
+                <br>
+                {% for message in messages %}
+                    <div class="alert {{ message.tags }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
             <form action="{% url 'login' %}" method="POST">{% csrf_token %}
-                <label>Nome da Empresa</label>
-                <br>
-                <input type="text" class="input-default" name="username">
-                <br>
-                <br>
-                <label>Senha</label>
-                <br>
-                <input type="password" class="input-default" name="senha">
-                <br>
-                <br>
-                <input type="submit" class="btn-default" value="Logar">
+                
+                <div id="loginDiv">
+                    <h1>Login</h1>
+                    <div class="form-group">
+                        <p>Email</p>
+                        <input name='username' id="receber" type="text">
+                    </div>
+                    <div class="form-group">
+                        <p>Senha</p>
+                        <input name='senha' id="senha" type="password">
+                    </div>
+                    <div class="form-senha">
+                        <div class="links">
+                            <p class = "cadastro">Não tem Cadastro? <a href="{% url 'cadastro' %}">Cadastre-se</a></p>
+                            <a href="">Esqueci minha senha</a>
+                        </div>
+                    </div>
+                    <div class="button-container">
+                        <button id ="entrar" type="submit">Entrar</button>
+                    </div>
+                </div>
             </form>
         </div>
     </div>
