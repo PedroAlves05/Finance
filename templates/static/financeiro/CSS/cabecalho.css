@@ -1,7 +1,7 @@
 header {
     display: grid;
-    grid-template-columns: 33% 33% 33%;
-    height: 20%;
+    grid-template-columns: 33.33% 33.33% 33.33%;
+    height: 17%;
 }
 
 .foto {
@@ -56,7 +56,7 @@ span{
 
 .login{
     display: grid;
-    grid-template-columns: 60% 10% 30%;
+    grid-template-columns: 67% 10% 22%;
 }
 .imageLogin{
     width: 50px;
@@ -66,3 +66,35 @@ span{
 a { 
     text-decoration: none !important;
   }
+
+  .conteiner {
+    display: grid;
+    grid-template-columns: 33.33% 33.33% 33.33%;
+    margin: 0%;
+    font-size: 25pt;
+    
+  }
+
+  ul{
+    list-style:none;
+  } 
+
+  ul li::before{
+    content: '\2022';
+    margin: 0 10px;
+    color: #0fbac4;
+    font-size: 25pt 
+    }
+
+.add{
+    display:grid;
+    grid-template-columns: 50% 50%;
+    }
+
+    .add button{
+        font-size: 20pt;
+    
+        border-radius: 12px 12px 12px 12px;
+        background-color: #1e5c8a;
+        border: none;
+    }

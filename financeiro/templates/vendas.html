@@ -50,11 +50,39 @@
                 <div>
                     <img src="https://w7.pngwing.com/pngs/339/876/png-transparent-login-computer-icons-password-login-black-symbol-subscription-business-model.png" alt="Imagem Login" class="imageLogin">
                 </div>
+                {% if not usuario %}
                 <div class="textoLogin">
                     <p> <strong><a href="../../usuarios/login">ENTRE</a></strong> ou crie seu <strong><a href="../../usuarios/cadastro">CADASTRO</a></strong></p>
                 </div>
+                {% else %}
+                <div class="textoLogin">
+                    <p>Usuário: {{usuario}}</p>
+                </div>
+                {% endif %}
             </div>
         </header>
+
+        <div class="conteiner">
+            <div>
+                <ul>
+                    <li>Vendas</li>
+                </ul>
+            </div>
+            <div>
+            </div>
+            <div class="add">
+                <div>
+                        <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                        +
+                        </button>
+                </div>
+                <div>
+                    <p>filtro</p>
+                </div>
+            </div>  
+     
+        </div>
 
         <table>
             <tr>
@@ -72,14 +100,10 @@
                 </tr>
             {% endfor %}
         </table>
+        
 
 
         <article>
-            <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-            +
-            </button>
-
             <!-- Modal -->
             <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                 <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
