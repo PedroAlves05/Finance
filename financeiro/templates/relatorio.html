@@ -3,7 +3,7 @@
     
 {% block 'head' %}
 
-    <link rel="stylesheet" href="{% static 'fincaneiro/CSS/css.css' %}" >
+    <link rel="stylesheet" href="{% static 'financeiro/CSS/relatorio.css' %}" >
     <link rel="stylesheet" href="{% static 'financeiro/CSS/cabecalho.css' %}">
 
 {% endblock 'head' %}
@@ -50,11 +50,26 @@
                 </div>
             </div>
         </header>
-    </div>
 
-        <h1>receita = {{total_vendas}}</h1>
-        <h1>despesa = -{{total_compras}}</h1>
-        <h1>total = {{total}}</h1>
+        <div class ="tabela">
+            <table>
+                <tr>
+                    <th>
+                        <h1>receita</h1>
+                        <h1>despesa</h1>
+                        <h1>total  </h1>
+                    </th>
+                    <th>
+                        <h1>{{total_vendas}}</h1>
+                        <h1>-{{total_compras}}</h1>
+                        <h1>{{total}}</h1>
+                    </th>
+                </tr>
+            </table>
+        </div>
+        
+
+    </div>
 
 
 {% endblock %}
