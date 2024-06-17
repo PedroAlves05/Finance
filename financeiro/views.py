@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from .models import Produtos, Vendas, Compras
+from .models import Produtos, Vendas, Compras, Contatos
 from django.contrib import messages
 from django.contrib.messages import constants
+from datetime import datetime
 
 
 
@@ -10,7 +11,13 @@ def estoque(request):
     if request.method == "GET":
         usuario = request.user
         produtos = Produtos.objects.filter(usuario=usuario)
-        return render(request, 'estoque.html', {'produtos': produtos})
+        return render(request, 'estoque.html', {'produtos': produtos, 'usuario': usuario})
+    elif request.method == "POST":
+        usuario = request.user
+        produto_escolhido = request.POST.get('filtrar_produto')
+        compras = Compras.objects.filter(usuario=usuario, produto__nome=produto_escolhido)
+        produtos = Produtos.objects.filter(usuario=usuario)
+        return render(request, 'vendas.html', {'compras' : compras, 'produtos': produtos, 'usuario': usuario})
 
 
 def adicionar_estoque(request):
@@ -41,7 +48,8 @@ def adicionar_estoque(request):
             usuario = usuario,
             produto = produto,
             quantidade = quantidade,
-            preco = valor
+            preco = valor,
+            data = datetime.now()
         )
         nova_compra.save()
         messages.add_message(request, constants.SUCCESS, 'Nova compra registrada com sucesso!')
@@ -55,14 +63,16 @@ def vendas(request):
         vendas = Vendas.objects.filter(usuario=usuario)
         produtos = Produtos.objects.filter(usuario=usuario)
         return render(request, 'vendas.html', {'vendas' : vendas, 'produtos': produtos, 'usuario':usuario})
+    elif request.method == "POST":
+        usuario = request.user
+        produto_escolhido = request.POST.get('filtrar_produto')
+        vendas = Vendas.objects.filter(usuario=usuario, produto__nome=produto_escolhido)
+        produtos = Produtos.objects.filter(usuario=usuario)
+        return render(request, 'vendas.html', {'vendas' : vendas, 'produtos': produtos, 'usuario': usuario})
 
 
 def adicionar_vendas(request):
-    if request.method == "GET":
-        usuario = request.user
-        produtos = Produtos.objects.filter(usuario=usuario)
-        return render(request, 'adicionar_vendas.html', {'produtos': produtos})
-    elif request.method == "POST":
+    if request.method == "POST":
         usuario = request.user
         produto_id = request.POST.get("produtos_existentes")
         produto_escolhido = Produtos.objects.get(usuario = usuario, id__in = produto_id)
@@ -72,7 +82,8 @@ def adicionar_vendas(request):
             usuario = request.user,
             produto = produto_escolhido,
             quantidade = quantidade,
-            preco = valor
+            preco = valor,
+            data = datetime.now()
         )
         nova_venda.save()
         quantidade = int(quantidade)
@@ -96,3 +107,16 @@ def relatorio(request):
             total_compras += compra.preco
         total = total_vendas - total_compras
         return render(request, 'relatorio.html', {'total_vendas' : total_vendas, 'total_compras' : total_compras, 'total':total})
+
+
+def contatos(request):
+    if request.method == "GET":
+        usuario = request.user
+        contatos = Contatos.objects.filter(usuario=usuario)
+        return render(request, 'contatos.html', {'usuario': usuario, 'contatos': contatos})
+
+
+def extrato(request):
+    usuario = request.user
+    contatos = Contatos.objects.filter(usuario=usuario)
+    return render(request, 'extrato.html', {'usuario': usuario})

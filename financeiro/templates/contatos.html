@@ -92,17 +92,15 @@
 
         <table>
             <tr>
-                <th>ID</th>
+                <th>Fornecedor</th>
                 <th>Produto</th>
-                <th>Quantidade</th>
-                <th>Preço</th>
+                <th>Número</th>
             </tr>
-            {% for venda in vendas %}
+            {% for contato in contatos %}
                 <tr class="linha-tabela">
-                    <td>{{venda.id}}</td>
-                    <td>{{venda.produto.nome}}</td>
-                    <td>{{venda.quantidade}}</td>
-                    <td>{{venda.preco}}</td>
+                    <td>{{contato.fornecedor}}</td>
+                    <td>{{contato.produto}}</td>
+                    <td>{{contato.telefone}}</td>
                 </tr>
             {% endfor %}
         </table>
