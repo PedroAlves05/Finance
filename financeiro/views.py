@@ -17,7 +17,14 @@ def estoque(request):
         produto_escolhido = request.POST.get('filtrar_produto')
         compras = Compras.objects.filter(usuario=usuario, produto__nome=produto_escolhido)
         produtos = Produtos.objects.filter(usuario=usuario)
-        return render(request, 'vendas.html', {'compras' : compras, 'produtos': produtos, 'usuario': usuario})
+        i = 0
+        for letra in usuario:
+            if letra == '@':
+                break
+            i += 1
+        nome_usuario = usuario[0:i]
+        print(nome_usuario + 'oi')
+        return render(request, 'vendas.html', {'compras' : compras, 'produtos': produtos, 'nome_usuario': nome_usuario})
 
 
 def adicionar_estoque(request):
@@ -62,13 +69,29 @@ def vendas(request):
         usuario = request.user
         vendas = Vendas.objects.filter(usuario=usuario)
         produtos = Produtos.objects.filter(usuario=usuario)
-        return render(request, 'vendas.html', {'vendas' : vendas, 'produtos': produtos, 'usuario':usuario})
+        i = 0
+        usuario1 = str(usuario)
+        for letra in usuario1:
+            if letra == '@':
+                break
+            i += 1
+        nome_usuario = usuario1[0:i]
+        print(nome_usuario)
+        return render(request, 'vendas.html', {'vendas' : vendas, 'produtos': produtos, 'usuario': nome_usuario})
     elif request.method == "POST":
         usuario = request.user
         produto_escolhido = request.POST.get('filtrar_produto')
         vendas = Vendas.objects.filter(usuario=usuario, produto__nome=produto_escolhido)
         produtos = Produtos.objects.filter(usuario=usuario)
-        return render(request, 'vendas.html', {'vendas' : vendas, 'produtos': produtos, 'usuario': usuario})
+        i = 0
+        usuario1 = str(usuario)
+        for letra in usuario1:
+            if letra == '@':
+                break
+            i += 1
+        nome_usuario = usuario1[0:i]
+        print(nome_usuario)
+        return render(request, 'vendas.html', {'vendas' : vendas, 'produtos': produtos, 'usuario': nome_usuario})
 
 
 def adicionar_vendas(request):
@@ -77,6 +100,10 @@ def adicionar_vendas(request):
         produto_id = request.POST.get("produtos_existentes")
         produto_escolhido = Produtos.objects.get(usuario = usuario, id__in = produto_id)
         quantidade = request.POST.get("quantidade")
+        quantidade = int(quantidade)
+        if produto_escolhido.quantidade < quantidade:
+            messages.add_message(request, constants.ERROR, 'Não tem produtos o suficiente no estoque!')
+            return redirect("/financeiro/vendas/")
         valor = request.POST.get("valor")
         nova_venda = Vendas(
             usuario = request.user,
