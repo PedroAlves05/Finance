@@ -1,21 +1,50 @@
 body {
-    display: grid;
-    place-items: center;
     background-color: #edf8f9;
+    font-family: Roboto, 'Open Sans', 'Helvetica Neue', sans-serif;
+
 }
 
+
 .tabela {
-
-    box-sizing: border-box;
-
-
-    margin-left: 20%;
-    margin-right: 20%;
-  
-    margin-top: 25px;
-    color: white;
+    display: flex; 
+    margin-left: 30%;
+    margin-right: 30%;
+    margin-top: 7%;
     background-color: #1E5C8A;
-    border: 3px solid #000000;
+    color: white;
     border-radius: 38px;
+    
 
+}
+
+.metade-esquerda, .metade-direita {
+    width: 100%;
+    display: grid;
+    text-align: center;
+}
+
+.metade-direita {
+    border-left: 2px solid #edf8f9;
+}
+
+.metade-esquerda {
+    border-right: 2px solid #edf8f9;
+}
+
+.borda_baixo {
+    border-bottom: 4px solid #edf8f9;
+}
+
+.positivo {
+    color: rgb(1, 255, 1);
+}
+
+.negativo {
+    color: rgb(255, 110, 110);
+}
+
+h2 {
+    margin: 0; 
+    padding: 35px; 
+    color: white;
 }
