@@ -15,7 +15,7 @@ class Vendas(models.Model):
     produto = models.ForeignKey(Produtos, on_delete=models.DO_NOTHING)
     quantidade = models.IntegerField()
     preco = models.FloatField()
-    data = models.DateTimeField(auto_now_add=True)
+    data = models.DateTimeField()
 
     def __str__(self):
         return f'{self.produto} - {self.quantidade}'
@@ -25,7 +25,14 @@ class Compras(models.Model):
     produto = models.ForeignKey(Produtos, on_delete=models.DO_NOTHING)
     quantidade = models.IntegerField()
     preco = models.FloatField()
-    data = models.DateTimeField(auto_now_add=True)
+    data = models.DateTimeField()
 
     def __str__(self):
         return f'{self.produto} - {self.quantidade}'
+    
+
+class Contatos(models.Model):
+    usuario = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+    fornecedor = models.CharField(max_length=50)
+    produto = models.CharField(max_length=50)
+    telefone = models.CharField(max_length=50)

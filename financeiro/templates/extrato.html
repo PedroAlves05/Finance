@@ -70,13 +70,6 @@
             </div>
             <div>
             </div>
-            <div class="add">
-                <div>
-                        <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-                        +
-                        </button>
-                </div>
                 <div>
                     <form action="{% url 'vendas' %}" method="POST">{% csrf_token %}
                         
@@ -107,55 +100,6 @@
             {% endfor %}
         </table>
         
-
-
-        <article>
-            <!-- Modal -->
-            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <form action="{% url 'adicionar_vendas' %}" method="POST">{% csrf_token %}
-                        <div class="modal-body">
-                            <div class="entrada">
-                                <div></div>
-                                <div>
-                                    <label for="produtos_existentes">Produtos</label>
-                                    <select class="caixao" name="produtos_existentes">
-                                    <option class="opt" value=""></option>
-                                        
-                                        {% for produto in produtos %}
-                                            {% if produto.quantidade > 0 %}
-                                                <option class="opt" value="{{produto.id}}">{{produto.nome}}</option>
-                                            {% endif %} 
-                                        {% endfor %}
-                                    </select>
-                                    <label for="quantidade">Quantidade Vendidade</label>
-                                    <input type="number" name="quantidade"></input>
-                                    <label for="valor">Valor Total</label>
-                                    <input type="number" name="valor"></input>
-                                </div>
-                                <div></div>
-                            </div>
-                        </div>
-                        <div class="entrada">
-                            <div></div>
-                            <div>
-                                <div>
-                                <div class="rodabotao">
-                                    <div></div>
-                                    <button type="button" class="botao" data-dismiss="modal">Cancelar</button>
-                                    <button class="btn-secundario">Fechar pedido</button>
-                                    <div></div>
-                                </div>
-                                </div>
-                            </div>
-                            <div></div>
-                        </form>
-                    </div>
-                </div>
-                </div>
-            </div>
-        </article>
     </div>
 
 {% endblock %}
