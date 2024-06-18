@@ -1,22 +1,13 @@
-body {
-    background-color: #edf8f9;
-    font-family: Roboto, 'Open Sans', 'Helvetica Neue', sans-serif;
-
-}
-
-
 .tabela {
     display: flex; 
-    margin-left: 30%;
-    margin-right: 30%;
-    margin-top: 7%;
+    margin: 7% 30% 0.5% 30%;
     background-color: #1E5C8A;
     color: white;
     border-radius: 38px;
-    
-
 }
-
+input{
+    
+}
 .metade-esquerda, .metade-direita {
     width: 100%;
     display: grid;
@@ -36,15 +27,14 @@ body {
 }
 
 .positivo {
-    color: rgb(1, 255, 1);
+    color: #4CFF4C;
 }
 
 .negativo {
-    color: rgb(255, 110, 110);
+    color: #FF4C4C;
 }
 
 h2 {
-
     margin: 0; 
     padding: 35px; 
     color: white;
