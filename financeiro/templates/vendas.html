@@ -36,7 +36,7 @@
                         <a href="{% url 'relatorio' %}"><span>Financeiro</span></a>
                     </div>
                     <div class="bordaFim">
-                        <span>Contatos</span>
+                        <a href="{%url 'extrato' %}"><span>Extrato</span></a>
                     </div>
                 </nav>
             </div>
@@ -52,7 +52,7 @@
                 </div>
                 {% else %}
                 <div class="textoLogin">
-                    <p>Usuário: {{usuario}}</p>
+                    <p>Bem-Vindo: {{usuario}}</p>
                 </div>
                 {% endif %}
             </div>
@@ -84,13 +84,14 @@
                     <form action="{% url 'vendas' %}" method="POST">{% csrf_token %}
                         <button  class="btn btn-primary" >Filtrar</button>
                                         
-                        <input type="text" name="filtrar_produto">
+                        <input type="text" name="filtrar_produto" placeholder="  Pesquisar...">
                     </form>
                 </div>
-                <div>
-                   <a href="{% url 'vendas' %}"> <button class="btn btn-primary">X</button></a>
-                </div>
+                
             </div>  
+            <div class="limparFiltro">
+                <a href="{% url 'vendas' %}"> <button class="btn btn-primary" >Limpar Filtro</button></a>
+             </div>
      
         </div>
         

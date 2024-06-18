@@ -56,8 +56,9 @@ span {
 
 .login {
   display: grid;
-  grid-template-columns: 64% 13% 22%;
+  grid-template-columns: 64% 10% 25%;
 }
+
 .imageLogin {
   width: 50px;
   height: 50px;
@@ -69,9 +70,11 @@ a {
 
 .conteiner {
   display: grid;
-  grid-template-columns: 10% 20% 50% 20%;
-  margin-top: 35px;
+  grid-template-columns: 5% 30% 55% 10%;
+  margin-top: 30px;
   font-size: 25pt;
+  margin-bottom: 50px;
+  height: auto !important;
 }
 .conteiner input {
   width: 70%;
@@ -95,7 +98,7 @@ ul li::before {
 
 .add {
   display: grid;
-  grid-template-columns: 50% 50%;
+  grid-template-columns: 65% 35%;
 }
 
 .add button {
@@ -110,13 +113,37 @@ ul li::before {
   align-content: right !important;
 }
 .filtrar button {
-  height: 52px;
+  height: auto;
   width: auto;
   text-align: center !important;
   align-items: center !important;
 }
 
 .filtrar input {
-  width: 73%;
-  height: 52px;
+  width: 70%;
+  height: auto;
+  justify-self: end;
+  font-size: 17.1pt;
+}
+
+.limparFiltro button{
+  background-color: #1e5c8a !important;
+  border: none !important;
+  height: auto;
+  width: 100%;
+  font-size: 20pt;
+  border-radius: 10px !important;
+}
+.bordaInicio, .bordaMeio, .bordaFim, button{
+  background-color: #1e5c8a !important;
+}
+
+.bordaInicio:hover, .bordaMeio:hover, .bordaFim:hover, button:hover{
+  background-color: #17496e !important;
+}
+
+.conteiner button{
+  height: 40px;
+  width: auto;
+  font-size: 15pt;
 }
