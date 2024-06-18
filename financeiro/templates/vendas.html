@@ -53,6 +53,10 @@
                 {% else %}
                 <div class="textoLogin">
                     <p>Usuário: {{usuario}}</p>
+                    <form action="{% url 'logout' %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit">Logout</button>
+                    </form>
                 </div>
                 {% endif %}
             </div>
@@ -102,8 +106,8 @@
                 <tr class="linha-tabela">
                     <td class="texto">{{venda.produto.nome}}</td>
                     <td class="numero">{{venda.quantidade}}</td>
-                    <td class="numero">{{venda.preco}}</td>
-                    <td class="numero">{{venda.data}}</td>
+                    <td class="numero">{{venda.preco|floatformat:2}}</td>
+                    <td class="numero">{{ venda.data|date:"d/m/y"}} - {{ venda.data|time:"H:i" }}</td>
                 </tr>
             {% endfor %}
         </table>
@@ -133,7 +137,7 @@
                                     <label for="quantidade">Quantidade Vendidade</label>
                                     <input type="number" name="quantidade"></input>
                                     <label for="valor">Valor Total</label>
-                                    <input type="number" name="valor"></input>
+                                    <input type="number" name="valor" step="any"></input>
                                 </div>
                                 <div></div>
                             </div>
