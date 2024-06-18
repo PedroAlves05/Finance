@@ -36,7 +36,7 @@
                         <a href="{% url 'relatorio' %}"><span>Financeiro</span></a>
                     </div>
                     <div class="bordaFim">
-                        <span>Contatos</span>
+                        <a href="{%url 'extrato' %}"><span>Extrato</span></a>
                     </div>
                 </nav>
             </div>
@@ -77,22 +77,25 @@
             <div>
             </div>
             <div class="add">
-                <div>
+                <div class="novo">
                         <!-- Button trigger modal -->
+                         <!--class="btn-secundario"-->
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-                        +
+                        + Novo
                         </button>
                 </div>
-                <div>
+                <div class="filtrar">
                     <form action="{% url 'vendas' %}" method="POST">{% csrf_token %}
-                        
-                        <input type="text" name="filtrar_produto">
-
-                        <button class="btn-secundario">Filtrar</button>
-
+                        <button  class="btn btn-primary" >Filtrar</button>
+                                        
+                        <input type="text" name="filtrar_produto" placeholder="  Pesquisar...">
                     </form>
                 </div>
+                
             </div>  
+            <div class="limparFiltro">
+                <a href="{% url 'vendas' %}"> <button class="btn btn-primary" >Limpar Filtro</button></a>
+             </div>
      
         </div>
         
