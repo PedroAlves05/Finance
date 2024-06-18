@@ -35,7 +35,7 @@
                         <a href="{% url 'relatorio' %}"><span>Financeiro</span></a>
                     </div>
                     <div class="bordaFim">
-                        <span>Contatos</span>
+                        <a href="{% url 'extrato' %}"><span>Extrato</span></a>
                     </div>
                 </nav>
             </div>
@@ -50,6 +50,8 @@
                 </div>
             </div>
         </header>
+
+        <input type="month" id="maiuscula" placeholder="YYYY-MM" maxlength="7">
 
         <div class ="tabela">
             <div class="metade-esquerda">
@@ -76,8 +78,31 @@
             </div>
         </div>
         
-
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var input = document.getElementById('maiuscula');
+
+            input.addEventListener('input', function() {
+                var valor = this.value;
+                if (/^\d{4}-\d{2}$/.test(valor)) { // Verifica o formato YYYY-MM
+                    var partes = valor.split('-');
+                    var mesCapitalizado = partes[1].charAt(0).toUpperCase() + partes[1].slice(1);
+                    this.value = partes[0] + '-' + mesCapitalizado;
+                }
+            });
+            
+            
+            
+            
+            
+            var input = document.getElementById('maiuscula');
+            var hoje = new Date();
+            var ano = hoje.getFullYear();
+            var mes = ('0' + (hoje.getMonth() + 1)).slice(-2);
+            input.value = ano + '-' + mes; 
+        });
+        </script>
 
 
 {% endblock %}
