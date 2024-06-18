@@ -56,7 +56,7 @@ span {
 
 .login {
   display: grid;
-  grid-template-columns: 67% 10% 22%;
+  grid-template-columns: 64% 13% 22%;
 }
 .imageLogin {
   width: 50px;
@@ -69,9 +69,17 @@ a {
 
 .conteiner {
   display: grid;
-  grid-template-columns: 33.33% 33.33% 33.33%;
-  margin: 0%;
+  grid-template-columns: 10% 20% 50% 20%;
+  margin-top: 35px;
   font-size: 25pt;
+}
+.conteiner input {
+  width: 70%;
+  height: 70%;
+  border-radius: 25px;
+}
+.add button {
+  align-self: left;
 }
 
 ul {
@@ -92,8 +100,23 @@ ul li::before {
 
 .add button {
   font-size: 20pt;
-
   border-radius: 12px 12px 12px 12px;
   background-color: #1e5c8a;
   border: none;
+}
+.novo {
+  justify-self: end !important;
+  margin-right: 30px;
+  align-content: right !important;
+}
+.filtrar button {
+  height: 52px;
+  width: auto;
+  text-align: center !important;
+  align-items: center !important;
+}
+
+.filtrar input {
+  width: 73%;
+  height: 52px;
 }
