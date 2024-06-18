@@ -69,9 +69,9 @@
                 <table>
                     <tr>
                         <th>
-                            <h2 class ="borda_baixo">R$ {{total_vendas}}</h2>
-                            <h2 class ="borda_baixo">R$ -{{total_compras}}</h2>
-                            <h2 class="{% if total < 0 %}negativo{% elif total > 0 %}positivo{% endif %}">R$ {{total}}</h2>
+                            <h2 class ="borda_baixo">R$ {{total_vendas|floatformat:2}}</h2>
+                            <h2 class ="borda_baixo">R$ -{{total_compras|floatformat:2}}</h2>
+                            <h2 class="{% if total < 0 %}negativo{% elif total > 0 %}positivo{% endif %}">R$ {{total|floatformat:2}}</h2>
                         </th>
                     </tr>    
                 </table>

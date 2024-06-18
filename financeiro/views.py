@@ -6,7 +6,7 @@ from django.contrib.messages import constants
 from datetime import datetime
 
 
-
+@login_required
 def estoque(request):
     if request.method == "GET":
         usuario = request.user
@@ -23,7 +23,6 @@ def estoque(request):
                 break
             i += 1
         nome_usuario = usuario[0:i]
-        print(nome_usuario + 'oi')
         return render(request, 'vendas.html', {'compras' : compras, 'produtos': produtos, 'nome_usuario': nome_usuario})
 
 
@@ -63,7 +62,7 @@ def adicionar_estoque(request):
         return redirect("/financeiro/estoque/")
 
 
-
+@login_required
 def vendas(request):
     if request.method == "GET":
         usuario = request.user
@@ -76,7 +75,6 @@ def vendas(request):
                 break
             i += 1
         nome_usuario = usuario1[0:i]
-        print(nome_usuario)
         return render(request, 'vendas.html', {'vendas' : vendas, 'produtos': produtos, 'usuario': nome_usuario})
     elif request.method == "POST":
         usuario = request.user
@@ -90,7 +88,6 @@ def vendas(request):
                 break
             i += 1
         nome_usuario = usuario1[0:i]
-        print(nome_usuario)
         return render(request, 'vendas.html', {'vendas' : vendas, 'produtos': produtos, 'usuario': nome_usuario})
 
 
@@ -120,7 +117,7 @@ def adicionar_vendas(request):
         return redirect("/financeiro/vendas/")
 
 
-
+@login_required
 def relatorio(request):
     if request.method == "GET":
         usuario = request.user
@@ -135,7 +132,7 @@ def relatorio(request):
         total = total_vendas - total_compras
         return render(request, 'relatorio.html', {'total_vendas' : total_vendas, 'total_compras' : total_compras, 'total':total})
 
-
+@login_required
 def contatos(request):
     if request.method == "GET":
         usuario = request.user
@@ -143,6 +140,7 @@ def contatos(request):
         return render(request, 'contatos.html', {'usuario': usuario, 'contatos': contatos})
 
 
+@login_required
 def extrato(request):
     usuario = request.user
     contatos = Contatos.objects.filter(usuario=usuario)
