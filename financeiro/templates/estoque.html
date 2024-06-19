@@ -51,13 +51,24 @@
                     <p> <strong><a href="../../usuarios/login">ENTRE</a></strong> ou crie seu <strong><a href="../../usuarios/cadastro">CADASTRO</a></strong></p>
                 </div>
                 {% else %}
+                {% if not usuario %}
+                <div class="textoLogin">
+                    <p> <strong><a href="../../usuarios/login">ENTRE</a></strong> ou crie seu <strong><a href="../../usuarios/cadastro">CADASTRO</a></strong></p>
+                </div>
+                {% else %}
                 <div class="textoLogin">
                     <p>Bem-Vindo: {{usuario}}</p>
                     <form action="{% url 'logout' %}" method="post">
                         {% csrf_token %}
                         <button type="submit">Logout</button>
                     </form>
+                    <p>Bem-Vindo: {{usuario}}</p>
+                    <form action="{% url 'logout' %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit">Logout</button>
+                    </form>
                 </div>
+                {% endif %}
                 {% endif %}
             </div>
         </header>

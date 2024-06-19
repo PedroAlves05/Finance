@@ -4,6 +4,7 @@ from .models import Produtos, Vendas, Compras, Contatos
 from django.contrib import messages
 from django.contrib.messages import constants
 from datetime import datetime
+from django.utils.timezone import now
 
 
 @login_required
@@ -18,20 +19,27 @@ def estoque(request):
                 break
             i += 1
         nome_usuario = usuario1[0:i]
-
         return render(request, 'estoque.html', {'produtos': produtos, 'usuario': nome_usuario})
     elif request.method == "POST":
         usuario = request.user
-        produto_escolhido = request.POST.get('filtrar_produto')
-        compras = Compras.objects.filter(usuario=usuario, produto__nome=produto_escolhido)
-        produtos = Produtos.objects.filter(usuario=usuario)
         i = 0
-        for letra in usuario:
+        usuario1 = str(usuario)
+        for letra in usuario1:
             if letra == '@':
                 break
             i += 1
-        nome_usuario = usuario[0:i]
-        return render(request, 'vendas.html', {'compras' : compras, 'produtos': produtos, 'nome_usuario': nome_usuario})
+        nome_usuario = usuario1[0:i]
+        if request.POST.get('filtrar_produto'):
+            produto_escolhido = request.POST.get('filtrar_produto')
+            compras = Compras.objects.filter(usuario=usuario, produto__nome=produto_escolhido)
+            produtos = Produtos.objects.filter(usuario=usuario)
+            return render(request, 'vendas.html', {'compras' : compras, 'produtos': produtos, 'usuario': nome_usuario})
+        if request.POST.get('alterar_produto'):
+            produto_escolhido = request.POST.get('alterar_produto')
+            produto = Produtos.objects.get(usuario=usuario, produto__id=produto_escolhido)
+
+            return render(request, 'estoque.html', {'compras' : compras, 'produtos': produtos, 'usuario': nome_usuario, 'produto_escolhido': produto})
+        return render(request, 'estoque.html')
 
 
 def adicionar_estoque(request):
@@ -66,7 +74,7 @@ def adicionar_estoque(request):
 def vendas(request):
     if request.method == "GET":
         usuario = request.user
-        vendas = Vendas.objects.filter(usuario=usuario)
+        vendas = Vendas.objects.filter(usuario=usuario).order_by('-data')
         produtos = Produtos.objects.filter(usuario=usuario)
         i = 0
         usuario1 = str(usuario)
@@ -79,7 +87,7 @@ def vendas(request):
     elif request.method == "POST":
         usuario = request.user
         produto_escolhido = request.POST.get('filtrar_produto')
-        vendas = Vendas.objects.filter(usuario=usuario, produto__nome=produto_escolhido)
+        vendas = Vendas.objects.filter(usuario=usuario, produto__nome=produto_escolhido).order_by('-data')
         produtos = Produtos.objects.filter(usuario=usuario)
         i = 0
         usuario1 = str(usuario)
@@ -121,8 +129,11 @@ def adicionar_vendas(request):
 def relatorio(request):
     if request.method == "GET":
         usuario = request.user
-        vendas = Vendas.objects.filter(usuario=usuario)
-        compras = Compras.objects.filter(usuario=usuario)
+        data_hoje = now()
+        ano_atual = data_hoje.year
+        mes_atual = data_hoje.month
+        vendas = Vendas.objects.filter(usuario=usuario, data__year=ano_atual, data__month=mes_atual)
+        compras = Compras.objects.filter(usuario=usuario, data__year=ano_atual, data__month=mes_atual)
         total_compras = 0
         total_vendas = 0
         for venda in vendas:
@@ -130,7 +141,14 @@ def relatorio(request):
         for compra in compras:
             total_compras += compra.preco
         total = total_vendas - total_compras
-        return render(request, 'relatorio.html', {'total_vendas' : total_vendas, 'total_compras' : total_compras, 'total':total})
+        i = 0
+        usuario1 = str(usuario)
+        for letra in usuario1:
+            if letra == '@':
+                break
+            i += 1
+        nome_usuario = usuario1[0:i]
+        return render(request, 'relatorio.html', {'total_vendas' : total_vendas, 'total_compras' : total_compras, 'total':total, 'usuario': nome_usuario, 'ano': ano_atual, 'mes': mes_atual})
 
 @login_required
 def contatos(request):
@@ -140,34 +158,28 @@ def contatos(request):
         return render(request, 'contatos.html', {'usuario': usuario, 'contatos': contatos})
 
 
+from itertools import chain
+from operator import attrgetter
+
 @login_required
 def extrato(request):
     usuario = request.user
-    contatos = Contatos.objects.filter(usuario=usuario)
-    return render(request, 'extrato.html', {'usuario': usuario})
+    i = 0
+    usuario1 = str(usuario)
+    for letra in usuario1:
+        if letra == '@':
+            break
+        i += 1
+    nome_usuario = usuario1[0:i]
+    usuario = request.user
+    vendas = Vendas.objects.filter(usuario=usuario).order_by('-data')
+    compras = Compras.objects.filter(usuario=usuario).order_by('-data')
+    for venda in vendas:
+        venda.tipo = 'venda'  # Adiciona o campo 'tipo' para vendas
 
-def estoque1(request):
-    if request.method == "GET":
-        usuario = request.user
-        produtos = Produtos.objects.filter(usuario=usuario)
-        i = 0
-        usuario1 = str(usuario)
-        for letra in usuario1:
-            if letra == '@':
-                break
-            i += 1
-        nome_usuario = usuario1[0:i]
-
-        return render(request, 'estoque1.html', {'produtos': produtos, 'usuario': nome_usuario})
-    elif request.method == "POST":
-        usuario = request.user
-        produto_escolhido = request.POST.get('filtrar_produto')
-        compras = Compras.objects.filter(usuario=usuario, produto__nome=produto_escolhido)
-        produtos = Produtos.objects.filter(usuario=usuario)
-        i = 0
-        for letra in usuario:
-            if letra == '@':
-                break
-            i += 1
-        nome_usuario = usuario[0:i]
-        return render(request, 'vendas.html', {'compras' : compras, 'produtos': produtos, 'nome_usuario': nome_usuario})
+    for compra in compras:
+        compra.tipo = 'compra'  # Adiciona o campo 'tipo' para compras
+    combined = chain(vendas, compras)
+    result = sorted(combined, key=attrgetter('data'), reverse=True)
+    produtos = Produtos.objects.filter(usuario=usuario)
+    return render(request, 'extrato.html', {'usuario': nome_usuario, 'vendas': result, 'produtos': produtos})

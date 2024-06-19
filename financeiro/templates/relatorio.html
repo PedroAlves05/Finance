@@ -26,7 +26,7 @@
                 <h1>Controle Financeiro</h1>
                 <nav>
                     <div class="bordaInicio">
-                        <a href="{% url 'estoque'%}"><span>Estoque</span></a>
+                        <a href="{% url 'estoque' %}"><span>Estoque</span></a>
                     </div>
                     <div class="bordaMeio">
                         <a href="{% url 'vendas' %}"><span>Vendas</span></a>
@@ -45,14 +45,34 @@
                 <div>
                     <img src="https://w7.pngwing.com/pngs/339/876/png-transparent-login-computer-icons-password-login-black-symbol-subscription-business-model.png" alt="Imagem Login" class="imageLogin">
                 </div>
+                {% if not usuario %}
                 <div class="textoLogin">
-                    <p>Faça seu <strong><a href="../../usuarios/login">LOGIN</a></strong> ou crie seu <strong><a href="../../usuarios/cadastro">CADASTRO</a></strong></p>
+                    <p><strong><a href="../../usuarios/login">ENTRE</a></strong> ou crie seu <strong><a href="../../usuarios/cadastro">CADASTRO</a></strong></p>
                 </div>
+                {% else %}
+                <div class="textoLogin">
+                    <p>Usuário: {{ usuario }}</p>
+                    <form action="{% url 'logout' %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit">Logout</button>
+                    </form>
+                </div>
+                {% endif %}
             </div>
         </header>
 
-        <input type="month" id="maiuscula" placeholder="YYYY-MM" maxlength="7">
+        <div class="conteiner">
+            <div>
+                <ul>
+                    <li>Financeiro</li>
+                </ul>
+            </div>
+        </div>
 
+        <div class="mesAno">
+            <p id="mesAno"></p>
+        </div>
+        
         <div class ="tabela">
             <div class="metade-esquerda">
                 <table>
@@ -80,29 +100,26 @@
         
     </div>
     <script>
+        // JavaScript para inserir o mês e ano atual com a formatação "Mês/Ano"
         document.addEventListener('DOMContentLoaded', function() {
-            var input = document.getElementById('maiuscula');
-
-            input.addEventListener('input', function() {
-                var valor = this.value;
-                if (/^\d{4}-\d{2}$/.test(valor)) { // Verifica o formato YYYY-MM
-                    var partes = valor.split('-');
-                    var mesCapitalizado = partes[1].charAt(0).toUpperCase() + partes[1].slice(1);
-                    this.value = partes[0] + '-' + mesCapitalizado;
-                }
-            });
+            const mesAnoElement = document.getElementById('mesAno');
+            const dataAtual = new Date();
             
+            // Obter o mês por extenso e o ano
+            const opcoesMes = { month: 'long' };
+            const mes = dataAtual.toLocaleDateString('pt-BR', opcoesMes);
+            const ano = dataAtual.getFullYear();
             
+            // Capitalizar a primeira letra do mês
+            const mesCapitalizado = mes.charAt(0).toUpperCase() + mes.slice(1);
             
+            // Formatar como "Mês/Ano"
+            const mesAno = `${mesCapitalizado}/${ano}`;
             
-            
-            var input = document.getElementById('maiuscula');
-            var hoje = new Date();
-            var ano = hoje.getFullYear();
-            var mes = ('0' + (hoje.getMonth() + 1)).slice(-2);
-            input.value = ano + '-' + mes; 
+            // Inserir no elemento span
+            mesAnoElement.textContent = mesAno;
         });
-        </script>
+    </script>
 
 
 {% endblock %}

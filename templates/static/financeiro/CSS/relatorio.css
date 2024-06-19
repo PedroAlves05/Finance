@@ -5,16 +5,20 @@
     color: white;
     border-radius: 38px;
 }
+
 input{
-    
-    display: flex;
-    margin: 5% auto;
-    font-size: 30pt;
+    margin: 0 0 20px 40%;
     background-color: #edf8f9;
     border: 0;
-    align-items: center;
+}
+
+.mesAno{
+    display: flex;
+    font-weight: bold;
+    font-size: 2.6rem;
     justify-content: center;
-    align-self: center;
+    align-items: center;
+    text-align: center;
 }
 
 input:focus{
