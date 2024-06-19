@@ -1,0 +1,30 @@
+table {
+    margin-top: 30px;
+    border-collapse: collapse;
+    font-size: 20pt;
+    margin-left: auto;
+    margin-right: auto;
+    letter-spacing: 1px;
+    width: 100%;
+  }
+  th {
+    font-size: 22.5pt;
+  }
+  td {
+    min-width: 300px;
+  }
+  .texto {
+    text-align: left;
+  }
+  .numero {
+    text-align: right;
+  }
+  
+  tbody > tr:nth-of-type(even) {
+    background-color: rgb(181, 240, 241);
+  }
+  
+  .tabela {
+    display: grid;
+    grid-template-columns: 80% 20%;
+  }
