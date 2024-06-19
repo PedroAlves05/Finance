@@ -11,7 +11,15 @@ def estoque(request):
     if request.method == "GET":
         usuario = request.user
         produtos = Produtos.objects.filter(usuario=usuario)
-        return render(request, 'estoque.html', {'produtos': produtos, 'usuario': usuario})
+        i = 0
+        usuario1 = str(usuario)
+        for letra in usuario1:
+            if letra == '@':
+                break
+            i += 1
+        nome_usuario = usuario1[0:i]
+
+        return render(request, 'estoque.html', {'produtos': produtos, 'usuario': nome_usuario})
     elif request.method == "POST":
         usuario = request.user
         produto_escolhido = request.POST.get('filtrar_produto')

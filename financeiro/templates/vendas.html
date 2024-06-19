@@ -52,7 +52,7 @@
                 </div>
                 {% else %}
                 <div class="textoLogin">
-                    <p>Usuário: {{usuario}}</p>
+                    <p>Bem-Vindo: {{usuario}}</p>
                     <form action="{% url 'logout' %}" method="post">
                         {% csrf_token %}
                         <button type="submit">Logout</button>
@@ -61,13 +61,14 @@
                 {% endif %}
             </div>
         </header>
+
         {% if messages %}
         <br>
         {% for message in messages %}
             <div class="alert {{ message.tags }}">{{ message }}</div>
         {% endfor %}
         {% endif %}
-        <table>
+
         <div class="conteiner">
             <div>
                 <ul>
@@ -98,6 +99,7 @@
              </div>
      
         </div>
+        <table>
         
             <tr>
                 <th scope="col" class="texto">Produto</th>

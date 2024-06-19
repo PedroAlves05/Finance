@@ -126,7 +126,7 @@ ul li::before {
   font-size: 17.1pt;
 }
 
-.limparFiltro button{
+.limparFiltro button {
   background-color: #1e5c8a !important;
   border: none !important;
   height: auto;
@@ -134,16 +134,31 @@ ul li::before {
   font-size: 20pt;
   border-radius: 10px !important;
 }
-.bordaInicio, .bordaMeio, .bordaFim, button{
+.bordaInicio,
+.bordaMeio,
+.bordaFim,
+button {
   background-color: #1e5c8a !important;
 }
 
-.bordaInicio:hover, .bordaMeio:hover, .bordaFim:hover, button:hover{
+.bordaInicio:hover,
+.bordaMeio:hover,
+.bordaFim:hover,
+button:hover {
   background-color: #17496e !important;
 }
 
-.conteiner button{
+.conteiner button {
   height: 40px;
   width: auto;
   font-size: 15pt;
+}
+
+.textoLogin button {
+  height: 20px;
+  width: auto;
+  font-size: 10pt;
+  color: #fafbfc;
+  border: none;
+  border-radius: 10px;
 }
