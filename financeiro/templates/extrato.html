@@ -3,14 +3,11 @@
     
 {% block 'head' %}
 
-    <link rel="stylesheet" href="{% static 'fincaneiro/CSS/css.css' %}" >
+
     <link rel="stylesheet" href="{% static 'financeiro/CSS/cabecalho.css' %}">
-    <link rel="stylesheet" href="{% static 'financeiro/CSS/modal.css' %}">
+    <link rel="stylesheet" href="{% static 'financeiro/CSS/extrato.css' %}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    
+
     {% endblock 'head' %}
     
     
@@ -31,7 +28,7 @@
                 <h1>Controle Financeiro</h1>
                 <nav>
                     <div class="bordaInicio">
-                        <a href="{% url 'estoque'%}"><span>Estoque</span></a>
+                        <a href="{% url 'estoque' %}"><span>Estoque</span></a>
                     </div>
                     <div class="bordaMeio">
                         <a href="{% url 'vendas' %}"><span>Vendas</span></a>
@@ -40,7 +37,7 @@
                         <a href="{% url 'relatorio' %}"><span>Financeiro</span></a>
                     </div>
                     <div class="bordaFim">
-                        <span>Contatos</span>
+                        <a href="{% url 'extrato' %}"><span>Extrato</span></a>
                     </div>
                 </nav>
             </div>
@@ -52,54 +49,69 @@
                 </div>
                 {% if not usuario %}
                 <div class="textoLogin">
-                    <p> <strong><a href="../../usuarios/login">ENTRE</a></strong> ou crie seu <strong><a href="../../usuarios/cadastro">CADASTRO</a></strong></p>
+                    <p><strong><a href="../../usuarios/login">ENTRE</a></strong> ou crie seu <strong><a href="../../usuarios/cadastro">CADASTRO</a></strong></p>
                 </div>
                 {% else %}
                 <div class="textoLogin">
-                    <p>Usuário: {{usuario}}</p>
+                    <p>Usuário: {{ usuario }}</p>
+                    <form action="{% url 'logout' %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit">Logout</button>
+                    </form>
                 </div>
                 {% endif %}
             </div>
         </header>
-
+    
+        {% if messages %}
+        <br>
+        {% for message in messages %}
+            <div class="alert {{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+        {% endif %}
+        
         <div class="conteiner">
             <div>
                 <ul>
-                    <li>Vendas</li>
+                    <li>Extrato</li>
                 </ul>
             </div>
             <div>
             </div>
-                <div>
-                    <form action="{% url 'vendas' %}" method="POST">{% csrf_token %}
-                        
-                        <input type="text" name="filtrar_produto">
-
-                        <button class="btn-secundario">Filtrar</button>
-
+            <div class="adicionar">
+                <div class="filtro">
+                    <form action="{% url 'extrato' %}" class="arrumar"method="POST">{% csrf_token %}
+                        <button class="btn btn-primary">Filtrar</button>       
+                        <input type="month" id="pesquisar_mes">
                     </form>
                 </div>
             </div>  
-     
+            <div class="limparFiltro">
+                <a href="{% url 'extrato' %}"> <button class="btn btn-primary">Limpar Filtro</button></a>
+            </div>
         </div>
-
+        
         <table>
             <tr>
-                <th>ID</th>
-                <th>Produto</th>
-                <th>Quantidade</th>
-                <th>Preço</th>
+                <th scope="col" class="texto">Data</th>
+                <th scope="col" class="texto">Nome do Produto</th>
+                <th scope="col" class="numero">Quantidade</th>
+                <th scope="col" class="numero">Valor</th>
             </tr>
             {% for venda in vendas %}
-                <tr class="linha-tabela">
-                    <td>{{venda.id}}</td>
-                    <td>{{venda.produto.nome}}</td>
-                    <td>{{venda.quantidade}}</td>
-                    <td>{{venda.preco}}</td>
-                </tr>
+            <tr class="linha-tabela">
+                <td class="texto">{{ venda.data|date:"d/m/y" }} - {{ venda.data|time:"H:i" }}</td>
+                <td class="texto">{{ venda.produto.nome }}</td>
+                <td class="numero">{{ venda.quantidade }}</td>
+                {% if venda.tipo == 'venda' %}
+                <td class="positivo" >{{ venda.preco|floatformat:2 }}</td>
+                {% elif venda.tipo == 'compra' %}
+                <td class="negativo" >{{ venda.preco|floatformat:2 }}</td>
+                {% endif %}
+            </tr>
             {% endfor %}
+            
         </table>
         
     </div>
-
 {% endblock %}

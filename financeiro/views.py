@@ -157,6 +157,7 @@ def contatos(request):
         contatos = Contatos.objects.filter(usuario=usuario)
         return render(request, 'contatos.html', {'usuario': usuario, 'contatos': contatos})
 
+
 from itertools import chain
 from operator import attrgetter
 
@@ -173,20 +174,12 @@ def extrato(request):
     usuario = request.user
     vendas = Vendas.objects.filter(usuario=usuario).order_by('-data')
     compras = Compras.objects.filter(usuario=usuario).order_by('-data')
+    for venda in vendas:
+        venda.tipo = 'venda'  # Adiciona o campo 'tipo' para vendas
+
+    for compra in compras:
+        compra.tipo = 'compra'  # Adiciona o campo 'tipo' para compras
     combined = chain(vendas, compras)
     result = sorted(combined, key=attrgetter('data'), reverse=True)
     produtos = Produtos.objects.filter(usuario=usuario)
     return render(request, 'extrato.html', {'usuario': nome_usuario, 'vendas': result, 'produtos': produtos})
-
-
-@login_required
-def alterar_estoque(request):
-    if request.POST.get("produtos_existentes"):
-        usuario = request.user
-        produto_id = request.POST.get("produtos_existentes")
-        produto = Produtos.objects.get(usuario = usuario, id = produto_id)
-        quantidade = request.POST.get("quantidade")
-        quantidade = int(quantidade)
-        produto.quantidade += quantidade
-        produto.save()
-    return
