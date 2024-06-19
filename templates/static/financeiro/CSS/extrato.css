@@ -1,0 +1,79 @@
+table {
+    margin-top: 30px;
+    border-collapse: collapse;
+    font-size: 20pt;
+    margin-left: auto;
+    margin-right: auto;
+    letter-spacing: 1px;
+    width: 100%;
+  }
+  th {
+    font-size: 22.5pt;
+  }
+
+  td {
+    min-width: 300px;
+  }
+  .texto {
+    text-align: left;
+  }
+ .numero{
+    text-align: right;
+ }
+  
+  tbody > tr:nth-of-type(even) {
+    background-color: rgb(181, 240, 241);
+  }
+
+  .adicionar {
+    grid-template-columns: 65% 35%;
+  }
+  
+  .adicionar button {
+    font-size: 20pt;
+    border-radius: 12px 12px 12px 12px;
+    background-color: #1e5c8a;
+    border: none;
+    align-self: left;
+  }
+ 
+
+  .filtro button {
+    height: auto;
+    width: auto;
+    text-align: center !important;
+    align-items: center !important;
+  }
+  
+  .filtro input {
+    width: 25%;
+    height: 30%;
+    text-align: center;
+    border-radius: 12px;
+    font-size: 17.1pt;
+    background-color: #edf8f9;
+  }
+
+  .arrumar{
+    text-align: right;
+    margin-right: 15px;
+  }
+  
+  .limparFiltro button{
+    background-color: #1e5c8a !important;
+    border: none !important;
+    height: auto;
+    width: 100%;
+    font-size: 20pt;
+    border-radius: 10px !important;
+  }
+  
+  .positivo {
+    color: #028502;
+    text-align: right;
+}
+
+.negativo {
+    color: #f00a0a;
+    text-align: right;
+}

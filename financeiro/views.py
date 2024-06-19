@@ -140,8 +140,28 @@ def contatos(request):
         return render(request, 'contatos.html', {'usuario': usuario, 'contatos': contatos})
 
 
+from itertools import chain
+from operator import attrgetter
+
 @login_required
 def extrato(request):
     usuario = request.user
-    contatos = Contatos.objects.filter(usuario=usuario)
-    return render(request, 'extrato.html', {'usuario': usuario})
+    i = 0
+    usuario1 = str(usuario)
+    for letra in usuario1:
+        if letra == '@':
+            break
+        i += 1
+    nome_usuario = usuario1[0:i]
+    usuario = request.user
+    vendas = Vendas.objects.filter(usuario=usuario).order_by('-data')
+    compras = Compras.objects.filter(usuario=usuario).order_by('-data')
+    for venda in vendas:
+        venda.tipo = 'venda'  # Adiciona o campo 'tipo' para vendas
+
+    for compra in compras:
+        compra.tipo = 'compra'  # Adiciona o campo 'tipo' para compras
+    combined = chain(vendas, compras)
+    result = sorted(combined, key=attrgetter('data'), reverse=True)
+    produtos = Produtos.objects.filter(usuario=usuario)
+    return render(request, 'extrato.html', {'usuario': nome_usuario, 'vendas': result, 'produtos': produtos})
