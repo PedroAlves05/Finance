@@ -24,7 +24,10 @@ tbody > tr:nth-of-type(even) {
   background-color: rgb(181, 240, 241);
 }
 
-.tabela {
-  display: grid;
-  grid-template-columns: 80% 20%;
+button {
+  border: none !important;
+}
+
+td button {
+  margin-left: 10px;
 }

@@ -11,4 +11,5 @@ urlpatterns = [
     path('contatos/', views.contatos, name='contatos'),
     path('extrato/', views.extrato, name='extrato'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
+    path('estoque1/', views.estoque1, name="estoque1"),
 ]

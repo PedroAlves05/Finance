@@ -41,22 +41,14 @@ def adicionar_estoque(request):
         return render(request, 'adicionar_estoque.html', {'produtos': produtos})
     elif request.method == "POST":
         usuario = request.user
-        if request.POST.get("produtos_existentes"):
-            produto_id = request.POST.get("produtos_existentes")
-            produto = Produtos.objects.get(usuario = usuario, id = produto_id)
-            quantidade = request.POST.get("quantidade")
-            quantidade = int(quantidade)
-            produto.quantidade += quantidade
-            produto.save()
-        elif request.POST.get("novo_produto"):
-            produto = request.POST.get("novo_produto")
-            quantidade = request.POST.get("quantidade")
-            produto = Produtos(
-                usuario = usuario,
-                nome = produto,
-                quantidade = quantidade
-            )
-            produto.save()
+        produto = request.POST.get("produto")
+        quantidade = request.POST.get("quantidade")
+        produto = Produtos(
+            usuario = usuario,
+            nome = produto,
+            quantidade = quantidade
+        )
+        produto.save()
         valor = request.POST.get("valor")
         nova_compra = Compras(
             usuario = usuario,
@@ -153,3 +145,29 @@ def extrato(request):
     usuario = request.user
     contatos = Contatos.objects.filter(usuario=usuario)
     return render(request, 'extrato.html', {'usuario': usuario})
+
+def estoque1(request):
+    if request.method == "GET":
+        usuario = request.user
+        produtos = Produtos.objects.filter(usuario=usuario)
+        i = 0
+        usuario1 = str(usuario)
+        for letra in usuario1:
+            if letra == '@':
+                break
+            i += 1
+        nome_usuario = usuario1[0:i]
+
+        return render(request, 'estoque1.html', {'produtos': produtos, 'usuario': nome_usuario})
+    elif request.method == "POST":
+        usuario = request.user
+        produto_escolhido = request.POST.get('filtrar_produto')
+        compras = Compras.objects.filter(usuario=usuario, produto__nome=produto_escolhido)
+        produtos = Produtos.objects.filter(usuario=usuario)
+        i = 0
+        for letra in usuario:
+            if letra == '@':
+                break
+            i += 1
+        nome_usuario = usuario[0:i]
+        return render(request, 'vendas.html', {'compras' : compras, 'produtos': produtos, 'nome_usuario': nome_usuario})

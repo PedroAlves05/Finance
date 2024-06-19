@@ -87,58 +87,43 @@
                     <form action="{% url 'estoque' %}" method="POST">{% csrf_token %}
                         <button  class="btn btn-primary" >Filtrar</button>
                                         
-                        <input type="text" name="filtrar_produto" placeholder="  Pesquisar...">
+                        <input type="text" name="filtrar_produto" placeholder="Pesquisar...">
                     </form>
                 </div>    
             </div>  
             <div class="limparFiltro">
-                <a href="{% url 'estoque' %}"> <button class="btn btn-primary" >Limpar Filtro</button></a>
+                <a href="{% url 'estoque' %}"> <button class="btn btn-primary">Limpar Filtro</button></a>
              </div>
      
-        </div>
-        <div class="tabela">
-            <div>
+            </div>
                 <table>
                     <tr>
                         <th scope="col" class="texto">Produto</th>
                         <th scope="col" class="numero">Quantidade</th>
                     </tr>
-                    {% for venda in vendas %}
-                        <tr class="linha-tabela">
-                            <td class="texto">{{produto.nome}}</td>
-                            <td class="numero">{{venda.quantidade}}</td>
-                        </tr>
+                    {% for produto in produtos %}
+                    <tr class="linha-tabela">
+                        <td class="texto">{{produto.nome}}</td>
+                        <td class="numero">{{produto.quantidade}}</td>
+                        <td class="numero"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal2Center">Modificar</button><button class="btn btn-primary">Excluir</button></td>
+                    </tr>
                     {% endfor %}
                 </table>
-            </div>
-            <div class="botoes">
-           
-                <div>
-                    {% for venda in vendas %}
-                        <button>Excluir</button>
-                    {% endfor %}
-                </div>
-                <div>
-                    {% for venda in vendas %}
-                        <button>Modificar</button>
-                    {% endfor %}
-                </div>
-            </div>   
-        </div>
+
 
         <article>
             <!-- Modal -->
             <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                 <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                 <div class="modal-content">
-                    <form action="{% url 'adicionar_vendas' %}" method="POST">{% csrf_token %}
+                    <form action="{% url 'adicionar_estoque' %}" method="POST">{% csrf_token %}
                         <div class="modal-body">
                             <div class="entrada">
                                 <div></div>
                                 <div>
-                                    <label for="produtos_estoque">Produtos</label>
-                                    <input type="text" name="produtos"></input>
-                                    <label for="quantidade">Quantidade Vendidade</label>
+                                    <label for="produtos_estoque">Produto</label>
+                                    <input type="text" name="produto"></input>
+                                    <label for="quantidade">Quantidade</label>
                                     <input type="number" name="quantidade"></input>
                                     <label for="valor">Valor Total</label>
                                     <input type="number" name="valor" step="any"></input>
@@ -154,6 +139,46 @@
                                     <div></div>
                                     <button type="button" class="botao" data-dismiss="modal">Cancelar</button>
                                     <button class="btn-secundario">Fechar pedido</button>
+                                    <div></div>
+                                </div>
+                                </div>
+                            </div>
+                            <div></div>
+                        </form>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </article>
+
+        <article>
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal2Center" tabindex="-1" role="dialog" aria-labelledby="exampleModal2CenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <form action="{% url 'adicionar_estoque' %}" method="POST">{% csrf_token %}
+                        <div class="modal-body">
+                            <div class="entrada">
+                                <div></div>
+                                <div>
+                                    <label for="produtos_estoque">Produto</label>
+                                    <input type="text" name="produto"></input>
+                                    <label for="quantidade">Quantidade</label>
+                                    <input type="number" name="quantidade"></input>
+                                    <label for="valor">Valor Total</label>
+                                    <input type="number" name="valor" step="any"></input>
+                                </div>
+                                <div></div>
+                            </div>
+                        </div>
+                        <div class="entrada">
+                            <div></div>
+                            <div>
+                                <div>
+                                <div class="rodabotao">
+                                    <div></div>
+                                    <button type="button" class="botao" data-dismiss="modal">Cancelar</button>
+                                    <button class="btn-secundario">Modificar</button>
                                     <div></div>
                                 </div>
                                 </div>
