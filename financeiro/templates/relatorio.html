@@ -51,7 +51,7 @@
                 </div>
                 {% else %}
                 <div class="textoLogin">
-                    <p>Usuário: {{ usuario }}</p>
+                    <p>Bem-Vindo: {{ usuario }}</p>
                     <form action="{% url 'logout' %}" method="post">
                         {% csrf_token %}
                         <button type="submit">Logout</button>

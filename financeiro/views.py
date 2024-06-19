@@ -31,9 +31,9 @@ def estoque(request):
         nome_usuario = usuario1[0:i]
         if request.POST.get('filtrar_produto'):
             produto_escolhido = request.POST.get('filtrar_produto')
-            compras = Compras.objects.filter(usuario=usuario, produto__nome=produto_escolhido)
-            produtos = Produtos.objects.filter(usuario=usuario)
-            return render(request, 'vendas.html', {'compras' : compras, 'produtos': produtos, 'usuario': nome_usuario})
+            compras = Compras.objects.filter(usuario=usuario)
+            produtos = Produtos.objects.filter(usuario=usuario, nome=produto_escolhido)
+            return render(request, 'estoque.html', {'compras' : compras, 'produtos': produtos, 'usuario': nome_usuario})
         if request.POST.get('alterar_produto'):
             produto_escolhido = request.POST.get('alterar_produto')
             produto = Produtos.objects.get(usuario=usuario, produto__id=produto_escolhido)
@@ -163,23 +163,58 @@ from operator import attrgetter
 
 @login_required
 def extrato(request):
-    usuario = request.user
-    i = 0
-    usuario1 = str(usuario)
-    for letra in usuario1:
-        if letra == '@':
-            break
-        i += 1
-    nome_usuario = usuario1[0:i]
-    usuario = request.user
-    vendas = Vendas.objects.filter(usuario=usuario).order_by('-data')
-    compras = Compras.objects.filter(usuario=usuario).order_by('-data')
-    for venda in vendas:
-        venda.tipo = 'venda'  # Adiciona o campo 'tipo' para vendas
+    if request.method == "GET":
+        usuario = request.user
+        i = 0
+        usuario1 = str(usuario)
+        for letra in usuario1:
+            if letra == '@':
+                break
+            i += 1
+        nome_usuario = usuario1[0:i]
+        usuario = request.user
+        vendas = Vendas.objects.filter(usuario=usuario).order_by('-data')
+        compras = Compras.objects.filter(usuario=usuario).order_by('-data')
+        for venda in vendas:
+            venda.tipo = 'venda'  # Adiciona o campo 'tipo' para vendas
 
-    for compra in compras:
-        compra.tipo = 'compra'  # Adiciona o campo 'tipo' para compras
-    combined = chain(vendas, compras)
-    result = sorted(combined, key=attrgetter('data'), reverse=True)
-    produtos = Produtos.objects.filter(usuario=usuario)
-    return render(request, 'extrato.html', {'usuario': nome_usuario, 'vendas': result, 'produtos': produtos})
+        for compra in compras:
+            compra.tipo = 'compra'  # Adiciona o campo 'tipo' para compras
+        combined = chain(vendas, compras)
+        result = sorted(combined, key=attrgetter('data'), reverse=True)
+        produtos = Produtos.objects.filter(usuario=usuario)
+        return render(request, 'extrato.html', {'usuario': nome_usuario, 'vendas': result, 'produtos': produtos})
+    elif request.method == "POST":
+        usuario = request.user
+        i = 0
+        usuario1 = str(usuario)
+        for letra in usuario1:
+            if letra == '@':
+                break
+            i += 1
+        nome_usuario = usuario1[0:i]
+        usuario = request.user
+        data = request.POST.get('pesquisar_mes')
+        data_formatada = datetime.strptime(data, '%Y-%m').date()
+        data_mes = data_formatada.month
+        data_ano = data_formatada.year
+        vendas = Vendas.objects.filter(usuario=usuario, data__month=data_mes, data__year=data_ano).order_by('-data')
+        compras = Compras.objects.filter(usuario=usuario, data__month=data_mes, data__year=data_ano).order_by('-data')
+        for venda in vendas:
+            venda.tipo = 'venda'
+
+        for compra in compras:
+            compra.tipo = 'compra'
+        combined = chain(vendas, compras)
+        result = sorted(combined, key=attrgetter('data'), reverse=True)
+        produtos = Produtos.objects.filter(usuario=usuario)
+        return render(request, 'extrato.html', {'usuario': nome_usuario, 'vendas': result, 'produtos': produtos})
+    
+@login_required
+def alterar_estoque(request):
+    if request.method == 'POST':
+        usuario = request.user
+        id_produto = request.POST.get('produto-id')
+        # produto_escolhido = Produtos.objects.get(usuario=usuario, id=id_produto)
+        # print(produto_escolhido)
+        return redirect('/financeiro/estoque')

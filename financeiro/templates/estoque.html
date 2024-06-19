@@ -46,11 +46,7 @@
                 <div>
                     <img src="https://w7.pngwing.com/pngs/339/876/png-transparent-login-computer-icons-password-login-black-symbol-subscription-business-model.png" alt="Imagem Login" class="imageLogin">
                 </div>
-                {% if not usuario %}
-                <div class="textoLogin">
-                    <p> <strong><a href="../../usuarios/login">ENTRE</a></strong> ou crie seu <strong><a href="../../usuarios/cadastro">CADASTRO</a></strong></p>
-                </div>
-                {% else %}
+            
                 {% if not usuario %}
                 <div class="textoLogin">
                     <p> <strong><a href="../../usuarios/login">ENTRE</a></strong> ou crie seu <strong><a href="../../usuarios/cadastro">CADASTRO</a></strong></p>
@@ -62,13 +58,7 @@
                         {% csrf_token %}
                         <button type="submit">Logout</button>
                     </form>
-                    <p>Bem-Vindo: {{usuario}}</p>
-                    <form action="{% url 'logout' %}" method="post">
-                        {% csrf_token %}
-                        <button type="submit">Logout</button>
-                    </form>
                 </div>
-                {% endif %}
                 {% endif %}
             </div>
         </header>
@@ -116,7 +106,7 @@
                     <tr class="linha-tabela">
                         <td class="texto">{{produto.nome}}</td>
                         <td class="numero">{{produto.quantidade}}</td>
-                        <td class="numero"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal2Center">Modificar</button><button class="btn btn-primary">Excluir</button></td>
+                        <td class="numero"><button type="button" class="btn btn-primary" data-id="{{ produto.id }}" data-toggle="modal" data-target="#exampleModal2Center">Modificar</button><button class="btn btn-primary">Excluir</button></td>
                     </tr>
                     {% endfor %}
                 </table>
@@ -167,7 +157,8 @@
             <div class="modal fade" id="exampleModal2Center" tabindex="-1" role="dialog" aria-labelledby="exampleModal2CenterTitle" aria-hidden="true">
                 <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                 <div class="modal-content">
-                    <form action="{% url 'adicionar_estoque' %}" method="POST">{% csrf_token %}
+                    <form action="{% url 'alterar_estoque' %}" method="POST">{% csrf_token %}
+                        <input type="hidden" id="produto-id" name="produto-id">
                         <div class="modal-body">
                             <div class="entrada">
                                 <div></div>
@@ -176,8 +167,6 @@
                                     <input type="text" name="produto"></input>
                                     <label for="quantidade">Quantidade</label>
                                     <input type="number" name="quantidade"></input>
-                                    <label for="valor">Valor Total</label>
-                                    <input type="number" name="valor" step="any"></input>
                                 </div>
                                 <div></div>
                             </div>
@@ -203,5 +192,14 @@
         </article>
 
     </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.btn-modificar').click(function() {
+                var produtoId = $(this).data('id'); // Obter o ID do produto
+                $('#produto-id').val(produtoId); // Inserir o ID do produto no campo oculto do formulário
+            });
+        });
+    </script>
 
 {% endblock %}

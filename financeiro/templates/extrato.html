@@ -53,7 +53,7 @@
                 </div>
                 {% else %}
                 <div class="textoLogin">
-                    <p>Usuário: {{ usuario }}</p>
+                    <p>Bem-Vindo: {{ usuario }}</p>
                     <form action="{% url 'logout' %}" method="post">
                         {% csrf_token %}
                         <button type="submit">Logout</button>
@@ -80,9 +80,9 @@
             </div>
             <div class="adicionar">
                 <div class="filtro">
-                    <form action="{% url 'extrato' %}" class="arrumar"method="POST">{% csrf_token %}
+                    <form action="{% url 'extrato' %}" class="arrumar" method="POST">{% csrf_token %}
                         <button class="btn btn-primary">Filtrar</button>       
-                        <input type="month" id="pesquisar_mes">
+                        <input type="month"  name="pesquisar_mes">
                     </form>
                 </div>
             </div>  
